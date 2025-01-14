@@ -12,7 +12,7 @@ const tours = JSON.parse(
 
 // get all
 app.get('/api/v1/tours', (req, res) => {
-  res.status(200).json({
+  res.status(201).json({
     status: 'Success',
     results: tours.length,
     data: {
@@ -20,6 +20,7 @@ app.get('/api/v1/tours', (req, res) => {
     },
   });
 });
+
 // get one by id
 app.get('/api/v1/tours/:id', (req, res) => {
     const id = req.params.id * 1
@@ -37,6 +38,7 @@ app.get('/api/v1/tours/:id', (req, res) => {
         }
     })
 })
+
 // create new
 app.post('/api/v1/tours', (req, res) => {
 //   console.log(req.body)
@@ -52,6 +54,22 @@ fs.writeFile(`${__dirname}/dev-data/data/tours-simple.json`, JSON.stringify(tour
     })
 })
 });
+
+// edit a tour
+app.patch('/api/v1/tours/:id', (req, res) => {
+    if(req.params.id * 1 > tours.length){
+        res.status(400).json({
+            status: 'fail',
+            message: 'Inavlid Id'
+        })
+    }
+    res.status(200).json({
+        status: 'Success',
+        data: {
+            tour: 'Updated tour'
+        }
+    })
+})
 
 const port = 3000;
 app.listen(port, () => {
