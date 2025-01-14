@@ -126,17 +126,21 @@ const deleteUsers = (req, res) => {
   });
 };
 // tour routes
-app.route('/api/v1/tours').get(getAllTours).post(createTour);
-app
-  .route('/api/v1/tours/:id')
+const tourRouter = express.Router()
+app.use('/api/v1/tours', tourRouter)
+tourRouter.route('/').get(getAllTours).post(createTour);
+tourRouter
+  .route('/:id')
   .get(getTourById)
   .patch(editTour)
   .delete(deleteTour);
 
 // users routes
-app.route('/api/v1/users').get(getAllUsers).post(createUsers);
-app
-  .route('/api/v1/users/:id')
+const usersRouter = express.Router()
+app.use('/api/v1/users', usersRouter)
+usersRouter.route('/').get(getAllUsers).post(createUsers);
+usersRouter
+  .route('/:id')
   .get(getUsersById)
   .patch(editUsers)
   .delete(deleteUsers);
