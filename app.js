@@ -10,6 +10,7 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
 
+// get all
 app.get('/api/v1/tours', (req, res) => {
   res.status(200).json({
     status: 'Success',
@@ -19,6 +20,24 @@ app.get('/api/v1/tours', (req, res) => {
     },
   });
 });
+// get one by id
+app.get('/api/v1/tours/:id', (req, res) => {
+    const id = req.params.id * 1
+    const tour = tours.find(el => el.id === id)
+    if(!tour){
+        res.status(400).json({
+            status: 'fail',
+            message: 'Inavlid Id'
+        })
+    }
+    res.status(200).json({
+        status: 'success',
+        data: {
+            tour
+        }
+    })
+})
+// create new
 app.post('/api/v1/tours', (req, res) => {
 //   console.log(req.body)
 const newId = tours[tours.length - 1].id + 1
