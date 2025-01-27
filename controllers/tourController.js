@@ -2,29 +2,29 @@ const fs = require('fs');
 
 // get tours from local file
 const tours = JSON.parse(
-    fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
-  );
+  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`),
+);
 
 // middlewares
 exports.checkId = (req, res, next, val) => {
-  console.log(val)
-  if(req.params.id * 1 > tours.length){
+  // console.log(val)
+  if (req.params.id * 1 > tours.length) {
     return res.status(404).json({
       status: 'fail',
-      message: 'Inavalid ID'
-    })
+      message: 'Inavalid ID',
+    });
   }
-  next()
-}
+  next();
+};
 exports.checkBody = (req, res, next) => {
-  if(!req.body.name || !req.body.price){
+  if (!req.body.name || !req.body.price) {
     return res.status(404).json({
       status: 'Fail',
-      message: 'Missing name or price'
-    })
+      message: 'Missing name or price',
+    });
   }
-  next()
-}
+  next();
+};
 
 // tours route handlers
 exports.getAllTours = (req, res) => {
@@ -41,7 +41,7 @@ exports.getAllTours = (req, res) => {
 exports.getTourById = (req, res) => {
   const id = req.params.id * 1;
   const tour = tours.find((el) => el.id === id);
-  
+
   res.status(201).json({
     status: 'success',
     data: {
@@ -64,7 +64,7 @@ exports.createTour = (req, res) => {
           tour: newTour,
         },
       });
-    }
+    },
   );
 };
 
