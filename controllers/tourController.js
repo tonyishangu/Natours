@@ -14,6 +14,7 @@ exports.getAllTours = async (req, res) => {
     
     // EXECUTE QUERY
     const tours = await query
+    // SEND RESPONCE
     res.status(200).json({
       status: 'Success',
       results: tours.length,
