@@ -47,3 +47,19 @@ exports.login = catchAsync(async(req, res, next) => {
         token
     })
 })
+
+exports.protect = catchAsync(async(req, res, next) => {
+    // getting token and checkif it's there
+    let token
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        token = req.headers.authorization.split(' ')[1]
+    }
+    console.log(token)
+    if(!token){
+        return next(new AppError('User not logged in, please login to view tours', 401))
+    }
+    // verfication token
+    // check if user still exists
+    // check if user changed password after the token was issued
+    next()
+})
